@@ -1,0 +1,95 @@
+server:
+  port: 23677
+spring:
+  application:
+    name: train-server
+  redis:
+    use: true
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10000
+    #jedis pool连接池的配置
+    jedis:
+      pool:
+        max-active: 1024
+        max-wait: -1
+        max-idle: 100
+        min-idle: 0
+  datasource:
+    url: jdbc:sqlserver://124.70.215.191:1433;DatabaseName=3d_train
+    username: sa
+    password: P@ssw0rd
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    #连接池
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    #type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+#mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath*:com/sanzhisoft/**/mapper/xml/*Mapper.xml
+  type-aliases-package: com.sanzhisoft.**.entity
+  ##global-config:
+  global-config:
+    id-type: 2
+    #field-strategy: 2
+    db-column-underline: true
+    refresh-mapper: true
+    db-config:
+      insert-strategy: not_null
+      update-strategy: not_null
+  #      id-type: auto
+  #capital-mode: true
+  #key-generator: com.baomidou.springboot.xxx
+  #logic-delete-value: 0
+  #logic-not-delete-value: 1
+  #meta-object-handler: com.baomidou.springboot.xxx
+  #sql-injector: com.baomidou.springboot.xxx
+  ##configuration:
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    aggressive-lazy-loading: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: true
+    static-locations: file:./static/,file:./public/
+  #设定ftl文件路径
+  freemarker:
+    tempalte-loader-path: classpath:/templates
+    #关闭缓存，及时刷新，上线生产环境需要修改为true
+    cache: false
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: true
+    expose-session-attributes: true
+    request-context-attribute: request
+    suffix: .ftl
+auth:
+  jwt:
+    expire:
+      clients:
+        #app: 604800000 #有效期一周
+        #web: 600000 #10分钟有效期
+        app: 10604800000 #测试
+        web: 10604800000 #测试
+file:
+  upload:
+    path: D:/application/train/train_server/public  # 结尾不带反斜杠
+    privatePath: D:/application/train/train_files/private
+    types: jpg,jpeg,png,enc,rar,zip,doc,docx,pdf,xls,xlsx,xml,wps
+    stream-types: enc,rar,zip
+    maxSize: 102400 #KB
+  domain: http://192.168.0.102:8888
+swagger:
+  domain: localhost
+  rootUrl: http://localhost
+  openUrl: true
+  googleExecute: C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe
+common:
+  env: 开发环境
